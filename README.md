@@ -12,12 +12,7 @@ Aplicación web de gestión de libros con **Java 21, Spring Boot 4.1.2, Thymelea
 
 ## Ejecutar desde IntelliJ IDEA
 
-1. Extrae el archivo ZIP.
-2. En IntelliJ, selecciona **File > Open** y abre la carpeta `Libreria_Sin_PostgreSQL` (o el archivo `pom.xml`).
-3. Cuando aparezca la sugerencia, presiona **Load Maven Changes / Reload All Maven Projects** para actualizar H2.
-4. Abre `src/main/java/com/puce/libreria/LibreriaApplication.java`.
-5. Haz clic en **Run** (triángulo verde) junto al método `main()`.
-6. En el navegador entra a **http://localhost:8080**.
+En el navegador entra a **http://localhost:8080**.
 
 **Importante:** Si ejecutas mediante una configuración antigua que use el módulo de otro proyecto, elige la aplicación dentro de esta nueva carpeta. No hay que definir `DB_PASSWORD` ni ninguna variable relacionada con PostgreSQL.
 
