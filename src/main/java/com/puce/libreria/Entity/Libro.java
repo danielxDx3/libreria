@@ -12,7 +12,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
-/** Representa un libro guardado en la tabla libros de la base de datos H2. */
+/** Representa un libro guardado en la tabla libros de la base de datos PostgreSQL. */
 @Entity
 @Table(name = "libros")
 public class Libro {

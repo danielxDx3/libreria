@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Catálogo | Librería PUCE</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}" href="/css/styles.css">
+</head>
+<body>
+<div th:replace="~{fragments/nav :: navbar}"></div>
+
+<main class="container content-main">
+    <div class="section-heading">
+        <span class="eyebrow">LIBRERÍA PUCE</span>
+        <h1>Catálogo de libros</h1>
+        <p>Consulta, registra, modifica y administra los libros.</p>
+    </div>
+
+    <div class="alert" role="status" th:if="${mensaje}" th:text="${mensaje}"></div>
+
+    <p>
+        <a class="button button-primary" th:href="@{/libros/nuevo}">Registrar nuevo libro</a>
+    </p>
+
+    <form method="get" th:action="@{/libros}">
+        <input type="text" name="busqueda" th:value="${busqueda}"
+               placeholder="Buscar por título o editorial">
+        <button type="submit">Buscar</button>
+        <a th:href="@{/libros}">Limpiar</a>
+    </form>
+
+    <div class="table-container">
+        <table>
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Título</th>
+                <th>Editorial</th>
+                <th>Género</th>
+                <th>Páginas</th>
+                <th>Acciones</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="libro : ${libros}">
+                <td th:text="${libro.id}"></td>
+                <td th:text="${libro.titulo}"></td>
+                <td th:text="${libro.editorial}"></td>
+                <td th:text="${libro.genero}"></td>
+                <td th:text="${libro.numeroPagina}"></td>
+                <td>
+                    <a th:href="@{/libros/editar/{id}(id=${libro.id})}">Editar</a>
+                    <form th:action="@{/libros/eliminar/{id}(id=${libro.id})}"
+                          method="post" style="display:inline">
+                        <button type="submit"
+                                onclick="return confirm('¿Deseas eliminar este libro?')">
+                            Eliminar
+                        </button>
+                    </form>
+                </td>
+            </tr>
+            <tr th:if="${#lists.isEmpty(libros)}">
+                <td colspan="6">No hay libros registrados.</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</main>
+
+<footer class="site-footer">
+    Proyecto académico de gestión de libros · Spring Boot + PostgreSQL
+</footer>
+</body>
+</html>

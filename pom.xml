@@ -15,7 +15,7 @@
     <artifactId>libreria</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>libreria</name>
-    <description>Gestión de libros con Spring Boot, Thymeleaf y H2 en memoria</description>
+    <description>Gestión de libros con Spring Boot, Thymeleaf y PostgreSQL</description>
 
     <properties>
         <java.version>21</java.version>
@@ -49,11 +49,17 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-        <!-- H2 embebida: funciona sin instalar PostgreSQL ni configurar credenciales. -->
+        <!-- PostgreSQL para la ejecución normal de la aplicación. -->
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        <!-- H2 solo para las pruebas automatizadas. -->
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
-            <scope>runtime</scope>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 

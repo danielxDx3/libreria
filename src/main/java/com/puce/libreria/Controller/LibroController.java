@@ -100,5 +100,6 @@ public class LibroController {
     private void prepararFormulario(Model model, boolean editando) {
         model.addAttribute("generos", GENEROS);
         model.addAttribute("editando", editando);
+
     }
 }
