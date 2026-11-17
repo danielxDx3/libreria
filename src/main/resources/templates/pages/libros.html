@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Catálogo de libros | Librería PUCE</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}" href="/css/styles.css">
+</head>
+<body>
+<div th:replace="~{fragments/nav :: navbar}"></div>
+<main class="container content-main">
+    <nav class="breadcrumb" aria-label="Ubicación"><a th:href="@{/}">Inicio</a> <span>/</span> <span>Catálogo</span></nav>
+    <div class="section-heading list-heading">
+        <div>
+            <span class="eyebrow">GESTIÓN DE LIBROS</span>
+            <h1>Catálogo de libros</h1>
+            <p>Consulta, actualiza y organiza los libros registrados.</p>
+        </div>
+        <a class="button button-primary" th:href="@{/libros/formulario}">+ Registrar libro</a>
+    </div>
+
+    <div class="alert alert-success" role="status" th:if="${mensajeExito}" th:text="${mensajeExito}"></div>
+    <section class="catalog-card" aria-label="Listado de libros">
+        <form class="search-bar" th:action="@{/libros}" method="get">
+            <label for="busqueda" class="visually-hidden">Buscar por título o editorial</label>
+            <input id="busqueda" name="busqueda" type="search" th:value="${busqueda}" placeholder="Buscar por título o editorial...">
+            <button class="button button-primary" type="submit">Buscar</button>
+            <a class="button button-secondary" th:if="${not #strings.isEmpty(busqueda)}" th:href="@{/libros}">Limpiar</a>
+        </form>
+        <div class="table-scroll" th:if="${not #lists.isEmpty(libros)}">
+            <table>
+                <thead><tr><th>Título</th><th>Editorial</th><th>Género</th><th>Páginas</th><th>Acciones</th></tr></thead>
+                <tbody>
+                    <tr th:each="libro : ${libros}">
+                        <td><strong th:text="${libro.titulo}">Título</strong></td>
+                        <td th:text="${libro.editorial}">Editorial</td>
+                        <td><span class="genre-pill" th:text="${libro.genero}">Género</span></td>
+                        <td th:text="${libro.numeroPagina}">100</td>
+                        <td>
+                            <div class="actions">
+                                <a class="action-link" th:href="@{/libros/{id}/editar(id=${libro.id})}" th:aria-label="|Editar ${libro.titulo}|">Editar</a>
+                                <form th:action="@{/libros/{id}/eliminar(id=${libro.id})}" method="post"
+                                      onsubmit="return confirm('¿Desea eliminar este libro?');">
+                                    <button type="submit" class="action-link action-danger" th:aria-label="|Eliminar ${libro.titulo}|">Eliminar</button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="empty-state" th:if="${#lists.isEmpty(libros)}">
+            <div aria-hidden="true">📚</div>
+            <h2>No se encontraron libros</h2>
+            <p th:text="${#strings.isEmpty(busqueda)} ? 'Aún no hay libros registrados. ¡Agrega el primero!' : 'Prueba con otro título o editorial.'"></p>
+            <a class="button button-primary" th:if="${#strings.isEmpty(busqueda)}" th:href="@{/libros/formulario}">Registrar primer libro</a>
+        </div>
+    </section>
+</main>
+<footer class="site-footer">Proyecto académico de gestión de libros · Spring Boot + H2</footer>
+</body>
+</html>
